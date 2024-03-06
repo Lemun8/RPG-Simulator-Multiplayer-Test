@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviourPunCallbacks
 {
     #region Singleton
 
@@ -10,7 +11,7 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Debug.Log("more than one");
             return;
@@ -27,30 +28,46 @@ public class Inventory : MonoBehaviour
 
     public List<Item> items = new List<Item>();
 
-    public bool Add (Item item)
+    PhotonView view;
+
+    void Start()
     {
-        if (!item.isDefaultItem)
+        view = GetComponent<PhotonView>();
+
+        if (PhotonNetwork.IsConnected && view != null && view.IsMine)
         {
-            if(items.Count >= space)
-            {
-                Debug.Log("Not Enough Room");
-                return false;
-            }
-            items.Add(item);
-
-            if(onItemChangeCallback != null)
-                onItemChangeCallback.Invoke();
+            view.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
+    }
 
+    public bool Add(Item item)
+    {
+        
+            if (!item.isDefaultItem)
+            {
+                if (items.Count >= space)
+                {
+                    Debug.Log("Not Enough Room");
+                    return false;
+                }
+                items.Add(item);
+
+                if (onItemChangeCallback != null)
+                    onItemChangeCallback.Invoke();
+            }
+        
         return true;
     }
 
-    public void Remove (Item item)
+    public void Remove(Item item)
     {
-        items.Remove(item);
+        
+        
+            items.Remove(item);
 
-        if (onItemChangeCallback != null)
-            onItemChangeCallback.Invoke();
+            if (onItemChangeCallback != null)
+                onItemChangeCallback.Invoke();
+       
     }
-    
+
 }
