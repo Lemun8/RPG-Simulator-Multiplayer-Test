@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class GameManage : MonoBehaviour
 {
     public GameObject objectToActivate;
+    public GameObject pausemenu;
 
     private void Update()
     {
@@ -19,5 +22,19 @@ public class GameManage : MonoBehaviour
                 objectToActivate.SetActive(true);
             }
         }
+    }
+
+    public void DisconnectPlayer()
+    {
+        StartCoroutine(DisconnectAndLoad());
+        pausemenu.SetActive(false);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    IEnumerator DisconnectAndLoad()
+    {
+        PhotonNetwork.Disconnect();
+        while (PhotonNetwork.IsConnected)
+            yield return null;
     }
 }
