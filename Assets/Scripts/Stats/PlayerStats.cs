@@ -29,6 +29,5 @@ public class PlayerStats : CharacterStats
     {
         base.Die();
         Destroy(gameObject);
-        PlayerManager.instance.KillPlayer();
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
 public class GameManage : MonoBehaviour
@@ -24,7 +25,7 @@ public class GameManage : MonoBehaviour
         }
     }
 
-    public void DisconnectPlayer()
+    public void DisconnectAndLoadMainMenu()
     {
         StartCoroutine(DisconnectAndLoad());
         pausemenu.SetActive(false);
@@ -33,8 +34,13 @@ public class GameManage : MonoBehaviour
 
     IEnumerator DisconnectAndLoad()
     {
+        // Disconnect from the Photon server
         PhotonNetwork.Disconnect();
-        while (PhotonNetwork.IsConnected)
+
+        // Wait until the disconnection process is completed
+        while (PhotonNetwork.NetworkClientState != ClientState.Disconnected)
+        {
             yield return null;
+        }
     }
 }

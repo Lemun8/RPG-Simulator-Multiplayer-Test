@@ -5,23 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStats))]
 public class Enemy : Interactable
 {
+    GameObject enemyGameObject; // Changed playerManager to GameObject
 
-    PlayerManager playerManager;
     CharacterStats myStats;
 
     void Start()
     {
-        playerManager = PlayerManager.instance;
-        myStats = GetComponent<CharacterStats>(); 
+        enemyGameObject = GameObject.FindGameObjectWithTag("Enemy"); // Finding the GameObject with tag "Enemy"
+        myStats = GetComponent<CharacterStats>();
     }
 
     public override void Interact()
     {
         base.Interact();
-        CharacterCombat playerCombat = playerManager.player.GetComponent<CharacterCombat>();
-        if(playerCombat != null)
+        if (enemyGameObject != null)
         {
-            playerCombat.Attack(myStats);
+            CharacterCombat enemyCombat = enemyGameObject.GetComponent<CharacterCombat>(); // Getting CharacterCombat component from the enemyGameObject
+            if (enemyCombat != null)
+            {
+                enemyCombat.Attack(myStats); // Attacking with the provided stats
+            }
         }
     }
 }
