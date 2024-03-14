@@ -16,10 +16,7 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
-    public GameObject player;
+    public GameObject playerPrefab;
     public GameObject gameOverScreen;
-    public void KillPlayer()
-    {
-        gameOverScreen.SetActive(true);
-    }
+    
 }
