@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CharacterCombat : MonoBehaviour
 {
@@ -18,9 +19,12 @@ public class CharacterCombat : MonoBehaviour
     CharacterStats myStats;
     CharacterStats opponentStats;
 
+    PhotonView photonView;
+
     void Start()
     {
         myStats = GetComponent<CharacterStats>();
+        photonView = GetComponent<PhotonView>();
     }
 
     void Update()

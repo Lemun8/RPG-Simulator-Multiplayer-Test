@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class CharacterStats : MonoBehaviour
 
     public Stat damage;
     public Stat armor;
+
+    [SerializeField]
+    protected PhotonView photonView;
 
     public event System.Action<int, int> OnHealthChanged;
 
@@ -20,7 +24,8 @@ public class CharacterStats : MonoBehaviour
         
     }
 
-    public void TakeDamage (int damage)
+    [PunRPC]
+    public void RPCTakeDamage (int damage/*, PhotonMessageInfo info*/)
     {
         damage -= armor.GetValue();
         damage = Mathf.Clamp(damage, 0, int.MaxValue);
@@ -36,9 +41,25 @@ public class CharacterStats : MonoBehaviour
         if(currentHealth <= 0)
         {
             Die();
+            /*PlayerManager.Find(info.Sender).GetKill();*/
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        // Check if photonView is null before calling RPC
+        if (photonView != null)
+        {
+            // Call RPC to take damage across the network
+            photonView.RPC(nameof(RPCTakeDamage), RpcTarget.All, damage);
+        }
+        else
+        {
+            Debug.LogError("PhotonView is null in CharacterStats");
+        }
+    }
+
+    [PunRPC]
     public void Healing(int heal)
     {
         currentHealth += heal;
