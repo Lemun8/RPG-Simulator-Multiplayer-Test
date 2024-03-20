@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class SimpleCollectibleScript : MonoBehaviour {
 
-	public enum CollectibleTypes {NoType, Type1, Type2, Type3, Type4, Type5}; // you can replace this with your own labels for the types of collectibles in your game!
+	public enum CollectibleTypes { Medkit }; // you can replace this with your own labels for the types of collectibles in your game!
 	public CollectibleTypes CollectibleType; // this gameObject's type
 	public bool rotate; // do you want it to rotate?
 	public float rotationSpeed;
@@ -13,13 +13,12 @@ public class SimpleCollectibleScript : MonoBehaviour {
 	public GameObject collectEffect;
 	private CharacterStats stats;
 	private HealthUI healthUI;
+	[SerializeField]
 	PhotonView photonView;
 
 	// Use this for initialization
 	void Start () {
-		stats = GetComponent<CharacterStats>();
-		healthUI = GetComponent<HealthUI>();
-		photonView = GetComponent<PhotonView>();
+	
 	}
 	
 	// Update is called once per frame
@@ -33,8 +32,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Player") {
-			stats = other.GetComponent<CharacterStats>();
-			healthUI = other.GetComponent<HealthUI>();
+			other.GetComponent<CharacterStats>().Heal(50);
 			collectSound.Play();
 			Collect ();
 		}
@@ -42,23 +40,31 @@ public class SimpleCollectibleScript : MonoBehaviour {
 
 	public void Collect()
 	{
-		if(collectEffect)
+		Debug.Log("Collecting...");
+
+		/*if (stats == null || healthUI == null)
+		{
+			Debug.LogError("CharacterStats or HealthUI is null.");
+			return;
+		}*/
+
+		if (collectEffect)
 			Instantiate(collectEffect, transform.position, Quaternion.identity);
 
-		if (CollectibleType == CollectibleTypes.NoType) {
+		if (CollectibleType == CollectibleTypes.Medkit) {
 
-			photonView.RPC(nameof(HealPlayer), RpcTarget.All);
-			healthUI.OnHealthChanged(stats.maxHealth, stats.currentHealth);
+			/*healthUI.OnHealthChanged(stats.maxHealth, stats.currentHealth);*/
 			Debug.Log ("Do NoType Command");
 		}
-	
-		Destroy (gameObject);
+		photonView.RPC(nameof(DestroyGameObject), RpcTarget.All);
 	}
 
 	[PunRPC]
-	void HealPlayer()
-	{
-		stats.Healing(50);
-		healthUI.OnHealthChanged(stats.maxHealth, stats.currentHealth);
+	public void DestroyGameObject()
+    {
+		if (photonView.AmOwner)
+		{
+			PhotonNetwork.Destroy(gameObject);
+		}
 	}
 }

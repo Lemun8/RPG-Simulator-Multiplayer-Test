@@ -1699,7 +1699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   damage:
-    baseValue: 5
+    baseValue: 10
   armor:
     baseValue: 0
   photonView: {fileID: 3742588747488542794}
