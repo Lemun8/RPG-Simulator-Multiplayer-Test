@@ -35,7 +35,8 @@ public class CharacterStats : MonoBehaviour
 
         if(OnHealthChanged != null)
         {
-            OnHealthChanged(maxHealth, currentHealth);
+            OnHealthChanged.Invoke(maxHealth, currentHealth);
+            Debug.Log("HealthUI is not null");
         }
 
         if(currentHealth <= 0)

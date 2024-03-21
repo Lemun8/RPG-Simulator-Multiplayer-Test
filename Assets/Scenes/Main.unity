@@ -4180,6 +4180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 1434937662045110958, guid: 662d31ed37bf4b94c8ba8011d6013240, type: 3}
   target: {fileID: 242880554}
+  healthSlider: {fileID: 0}
 --- !u!114 &593463861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11322,7 +11323,7 @@ MonoBehaviour:
   debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
-  transmitEnabled: 1
+  transmitEnabled: 0
   samplingRate: 24000
   frameDuration: 20000
   bitrate: 30000
@@ -11977,6 +11978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 1434937662045110958, guid: 662d31ed37bf4b94c8ba8011d6013240, type: 3}
   target: {fileID: 25758936}
+  healthSlider: {fileID: 0}
 --- !u!114 &1649465373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15638,6 +15640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 1434937662045110958, guid: 662d31ed37bf4b94c8ba8011d6013240, type: 3}
   target: {fileID: 1450711381}
+  healthSlider: {fileID: 0}
 --- !u!114 &2105364803
 MonoBehaviour:
   m_ObjectHideFlags: 0

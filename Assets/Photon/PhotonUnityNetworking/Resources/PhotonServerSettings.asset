@@ -49,6 +49,8 @@ MonoBehaviour:
   - RPCTakeDamage
   - SpawnHealthPack
   - DestroyGameObject
+  - UpdateHealthUI
+  - ToggleMicIndicatorRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

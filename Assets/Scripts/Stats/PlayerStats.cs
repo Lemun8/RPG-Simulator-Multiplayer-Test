@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerStats : CharacterStats
 {
@@ -28,6 +29,11 @@ public class PlayerStats : CharacterStats
     public override void Die()
     {
         base.Die();
-        Destroy(gameObject);
+
+        PhotonNetwork.Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            SpawnPlayers.instance.Spawn();
+        }
     }
 }
