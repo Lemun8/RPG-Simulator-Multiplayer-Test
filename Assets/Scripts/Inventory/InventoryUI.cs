@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     public Transform itemsParent;
     public GameObject inventoryUI;
+    public Button button;
+
+    private bool isMobile;
 
     Inventory inventory;
 
@@ -14,15 +18,24 @@ public class InventoryUI : MonoBehaviour
     {
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateUI;
+        isMobile = Application.platform == RuntimePlatform.Android;
+        button = GetComponent<Button>();
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Inventory"))
+        if (isMobile)
         {
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
+            button.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (Input.GetButtonDown("Inventory"))
+            {
+                inventoryUI.SetActive(!inventoryUI.activeSelf);
+            }
         }
     }
 
@@ -40,5 +53,10 @@ public class InventoryUI : MonoBehaviour
                 slots[i].ClearSlot();
             }
         }
+    }
+
+    public void OpenInventoryOnClick()
+    {
+        inventoryUI.SetActive(!inventoryUI.activeSelf);
     }
 }

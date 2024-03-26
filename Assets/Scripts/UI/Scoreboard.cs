@@ -10,10 +10,14 @@ public class Scoreboard : MonoBehaviourPunCallbacks
     [SerializeField] GameObject scoreboardItemPrefab;
     [SerializeField] CanvasGroup canvasGroup;
 
+    private bool isMobile;
+
     Dictionary<Player, ScoreboardItem> scoreboardItems = new Dictionary<Player, ScoreboardItem>();
 
     void Start()
     {
+        isMobile = Application.platform == RuntimePlatform.Android;
+
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             AddScoreboardItem(player);
@@ -45,13 +49,20 @@ public class Scoreboard : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (isMobile)
         {
             canvasGroup.alpha = 1;
         }
-        else if (Input.GetKeyUp(KeyCode.Tab))
+        else
         {
-            canvasGroup.alpha = 0;
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                canvasGroup.alpha = 1;
+            }
+            else if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                canvasGroup.alpha = 0;
+            }
         }
     }
 }
