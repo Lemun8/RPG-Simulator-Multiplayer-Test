@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Voice.Unity;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class PushToTalk : MonoBehaviour
@@ -9,6 +10,8 @@ public class PushToTalk : MonoBehaviour
     public GameObject muteMic;
     public GameObject unmuteMic;
     public bool toggle;
+    public Button button;
+    private bool isMobile;
     private Recorder recorder;
 
     private void Awake()
@@ -17,6 +20,8 @@ public class PushToTalk : MonoBehaviour
         {
             recorder = GetComponent<Recorder>();
         }
+        button = GetComponent<Button>();
+        isMobile = Application.platform == RuntimePlatform.Android;
     }
 
     private void EnableTalking()
@@ -31,22 +36,47 @@ public class PushToTalk : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isMobile)
         {
-            toggle = !toggle;
-            if(toggle == true)
+            button.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                unmuteMic.SetActive(true);
-                muteMic.SetActive(false);
-                EnableTalking();
-            }
+                toggle = !toggle;
+                if (toggle == true)
+                {
+                    unmuteMic.SetActive(true);
+                    muteMic.SetActive(false);
+                    EnableTalking();
+                }
 
-            if(toggle == false)
-            {
-                muteMic.SetActive(true);
-                unmuteMic.SetActive(false);
-                DisableTalking();
+                if (toggle == false)
+                {
+                    muteMic.SetActive(true);
+                    unmuteMic.SetActive(false);
+                    DisableTalking();
+                }
             }
+        }
+    }
+
+    public void OnMicClick()
+    {
+        toggle = !toggle;
+        if (toggle == true)
+        {
+            unmuteMic.SetActive(true);
+            muteMic.SetActive(false);
+            EnableTalking();
+        }
+
+        if (toggle == false)
+        {
+            muteMic.SetActive(true);
+            unmuteMic.SetActive(false);
+            DisableTalking();
         }
     }
 }

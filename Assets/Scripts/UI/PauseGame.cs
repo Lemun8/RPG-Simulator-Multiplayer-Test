@@ -2,36 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class PauseGame : MonoBehaviour
 {
     public GameObject pausemenu;
-    
+    public Button button;
+
+    private bool isMobile;
     public string sceneName;
     public bool toggle;
 
+    void Start()
+    {
+        button = GetComponent<Button>();
+        isMobile = Application.platform == RuntimePlatform.Android;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (isMobile)
         {
-            toggle = !toggle;
-            if (toggle == false)
+            button.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                pausemenu.SetActive(false);
-                AudioListener.pause = false;
-                Time.timeScale = 1;
-               
-            }
-            if (toggle == true)
-            {
-                pausemenu.SetActive(true);
-                AudioListener.pause = false;
-                Time.timeScale = 0;
-                
+                toggle = !toggle;
+                if (toggle == false)
+                {
+                    pausemenu.SetActive(false);
+                    AudioListener.pause = false;
+                    Time.timeScale = 1;
+
+                }
+                if (toggle == true)
+                {
+                    pausemenu.SetActive(true);
+                    AudioListener.pause = false;
+                    Time.timeScale = 0;
+
+                }
             }
         }
     }
+
     public void resumeGame()
     {
         toggle = true;
@@ -39,10 +56,30 @@ public class PauseGame : MonoBehaviour
         AudioListener.pause = false;
         Time.timeScale = 1;
     }
+
     public void quitToMenu()
     {
         Time.timeScale = 1;
         AudioListener.pause = false;
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void OnClickPause()
+    {
+        toggle = !toggle;
+        if (toggle == false)
+        {
+            pausemenu.SetActive(false);
+            AudioListener.pause = false;
+            Time.timeScale = 1;
+
+        }
+        if (toggle == true)
+        {
+            pausemenu.SetActive(true);
+            AudioListener.pause = false;
+            Time.timeScale = 0;
+
+        }
     }
 }
