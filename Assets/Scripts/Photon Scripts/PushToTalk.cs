@@ -20,7 +20,6 @@ public class PushToTalk : MonoBehaviour
         {
             recorder = GetComponent<Recorder>();
         }
-        button = GetComponent<Button>();
         isMobile = Application.platform == RuntimePlatform.Android;
     }
 

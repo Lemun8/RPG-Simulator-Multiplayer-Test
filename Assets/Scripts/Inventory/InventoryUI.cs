@@ -19,8 +19,7 @@ public class InventoryUI : MonoBehaviour
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateUI;
         isMobile = Application.platform == RuntimePlatform.Android;
-        button = GetComponent<Button>();
-
+        
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
@@ -32,6 +31,7 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
+            button.gameObject.SetActive(false);
             if (Input.GetButtonDown("Inventory"))
             {
                 inventoryUI.SetActive(!inventoryUI.activeSelf);

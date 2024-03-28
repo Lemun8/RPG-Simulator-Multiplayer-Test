@@ -16,7 +16,7 @@ public class PauseGame : MonoBehaviour
 
     void Start()
     {
-        button = GetComponent<Button>();
+        
         isMobile = Application.platform == RuntimePlatform.Android;
     }
 
@@ -28,6 +28,7 @@ public class PauseGame : MonoBehaviour
         }
         else
         {
+            button.gameObject.SetActive(false);
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 toggle = !toggle;
