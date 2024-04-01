@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class Scoreboard : MonoBehaviourPunCallbacks
 {
@@ -11,6 +12,8 @@ public class Scoreboard : MonoBehaviourPunCallbacks
     [SerializeField] CanvasGroup canvasGroup;
 
     private bool isMobile;
+    public Button button;
+    public bool toggle;
 
     Dictionary<Player, ScoreboardItem> scoreboardItems = new Dictionary<Player, ScoreboardItem>();
 
@@ -21,6 +24,11 @@ public class Scoreboard : MonoBehaviourPunCallbacks
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             AddScoreboardItem(player);
+        }
+
+        if (isMobile)
+        {
+            button.gameObject.SetActive(true);
         }
     }
 
@@ -49,12 +57,9 @@ public class Scoreboard : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (isMobile)
+        if(isMobile == false)
         {
-            canvasGroup.alpha = 1;
-        }
-        else
-        {
+            button.gameObject.SetActive(false);
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 canvasGroup.alpha = 1;
@@ -63,6 +68,21 @@ public class Scoreboard : MonoBehaviourPunCallbacks
             {
                 canvasGroup.alpha = 0;
             }
+        }
+    }
+
+    public void ScoreboardOnClick()
+    {
+        toggle = !toggle;
+        if (toggle == false)
+        {
+            canvasGroup.alpha = 0;
+
+        }
+        if (toggle == true)
+        {
+            canvasGroup.alpha = 1;
+
         }
     }
 }

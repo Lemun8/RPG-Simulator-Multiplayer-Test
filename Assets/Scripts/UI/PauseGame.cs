@@ -16,17 +16,17 @@ public class PauseGame : MonoBehaviour
 
     void Start()
     {
-        
         isMobile = Application.platform == RuntimePlatform.Android;
-    }
 
-    void Update()
-    {
         if (isMobile)
         {
             button.gameObject.SetActive(true);
         }
-        else
+    }
+
+    void Update()
+    {
+        if (isMobile == false)
         {
             button.gameObject.SetActive(false);
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -49,6 +49,7 @@ public class PauseGame : MonoBehaviour
             }
         }
     }
+    
 
     public void resumeGame()
     {

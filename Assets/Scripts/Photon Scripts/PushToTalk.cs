@@ -23,6 +23,14 @@ public class PushToTalk : MonoBehaviour
         isMobile = Application.platform == RuntimePlatform.Android;
     }
 
+    void Start()
+    {
+        if (isMobile)
+        {
+            button.gameObject.SetActive(true);
+        }
+    }
+
     private void EnableTalking()
     {
         recorder.TransmitEnabled = true;
@@ -35,27 +43,25 @@ public class PushToTalk : MonoBehaviour
 
     void Update()
     {
-        if (isMobile)
+        if (isMobile == false)
         {
-            button.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
             {
-                toggle = !toggle;
-                if (toggle == true)
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    unmuteMic.SetActive(true);
-                    muteMic.SetActive(false);
-                    EnableTalking();
-                }
+                    toggle = !toggle;
+                    if (toggle == true)
+                    {
+                        unmuteMic.SetActive(true);
+                        muteMic.SetActive(false);
+                        EnableTalking();
+                    }
 
-                if (toggle == false)
-                {
-                    muteMic.SetActive(true);
-                    unmuteMic.SetActive(false);
-                    DisableTalking();
+                    if (toggle == false)
+                    {
+                        muteMic.SetActive(true);
+                        unmuteMic.SetActive(false);
+                        DisableTalking();
+                    }
                 }
             }
         }

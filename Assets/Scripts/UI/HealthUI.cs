@@ -14,11 +14,11 @@ public class HealthUI : MonoBehaviourPunCallbacks
     
     Transform ui;
     [SerializeField] Image healthSlider;
-    Transform cam;
+    
 
     void Start()
     {
-        cam = Camera.main.transform;
+        
         GetComponent<CharacterStats>().OnHealthChanged += OnHealthChanged;
     }
 

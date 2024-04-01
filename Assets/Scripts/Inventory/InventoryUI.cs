@@ -21,15 +21,16 @@ public class InventoryUI : MonoBehaviour
         isMobile = Application.platform == RuntimePlatform.Android;
         
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
-    }
 
-    void Update()
-    {
         if (isMobile)
         {
             button.gameObject.SetActive(true);
         }
-        else
+    }
+
+    void Update()
+    {
+        if (isMobile == false)
         {
             button.gameObject.SetActive(false);
             if (Input.GetButtonDown("Inventory"))
@@ -37,6 +38,7 @@ public class InventoryUI : MonoBehaviour
                 inventoryUI.SetActive(!inventoryUI.activeSelf);
             }
         }
+        
     }
 
     // Update is called once per frame
