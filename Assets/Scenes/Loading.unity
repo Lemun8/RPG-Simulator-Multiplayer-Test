@@ -1192,6 +1192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameInput: {fileID: 536257107}
   buttonText: {fileID: 358415092}
+  connectButton: {fileID: 1316086950}
 --- !u!4 &2109919202
 Transform:
   m_ObjectHideFlags: 0

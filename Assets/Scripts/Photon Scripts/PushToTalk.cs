@@ -45,26 +45,27 @@ public class PushToTalk : MonoBehaviour
     {
         if (isMobile == false)
         {
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    toggle = !toggle;
-                    if (toggle == true)
-                    {
-                        unmuteMic.SetActive(true);
-                        muteMic.SetActive(false);
-                        EnableTalking();
-                    }
+            button.gameObject.SetActive(false);
 
-                    if (toggle == false)
-                    {
-                        muteMic.SetActive(true);
-                        unmuteMic.SetActive(false);
-                        DisableTalking();
-                    }
-                }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                 toggle = !toggle;
+                 if (toggle == true)
+                 {
+                     unmuteMic.SetActive(true);
+                     muteMic.SetActive(false);
+                     EnableTalking();
+                 }
+
+                 if (toggle == false)
+                 {
+                     muteMic.SetActive(true);
+                     unmuteMic.SetActive(false);
+                     DisableTalking();
+                 }
             }
         }
+        
     }
 
     public void OnMicClick()
